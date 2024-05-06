@@ -1,1 +1,1 @@
-# nc-news-frontend
+# NC-News Frontend Project
