@@ -1,8 +1,13 @@
+import Articles from "./Components/Articles";
+import Header from "./Components/Header";
+import MainContent from "./Components/MainContent";
+
 function App() {
 	return (
-		<>
-			<h1>NC News</h1>
-		</>
+		<MainContent>
+			<Header />
+			<Articles />
+		</MainContent>
 	);
 }
 
