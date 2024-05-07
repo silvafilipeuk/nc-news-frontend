@@ -16,7 +16,7 @@ const ArticleBox = styled.div`
 		"votes comment_count comment_count";
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
-	@media ${sizes.sm} {
+	@media ${sizes.md} {
 		width: 700px;
 	}
 `;
@@ -26,7 +26,7 @@ const Image = styled.img`
 	width: 300px;
 	border-radius: 5px;
 
-	@media ${sizes.sm} {
+	@media ${sizes.md} {
 		width: 700px;
 	}
 `;
