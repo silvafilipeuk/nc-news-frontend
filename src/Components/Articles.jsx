@@ -3,6 +3,7 @@ import ArticleCard from "./ReusableComponents/ArticleCard";
 import getArticles from "../utils/getArticles";
 import LoadMoreButton from "./ReusableComponents/LoadMoreButton";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
 	display: grid;
@@ -15,7 +16,7 @@ function Articles() {
 	const [loadedArticles, setloadedArticles] = useState(0);
 
 	function handleLoadMore() {
-		setLimit(limit * 2);
+		setLimit(limit + 10);
 	}
 
 	useEffect(() => {
@@ -29,7 +30,13 @@ function Articles() {
 	return (
 		<Container>
 			{articles.map((article) => (
-				<ArticleCard key={article.article_id} article={article} />
+				<Link
+					style={{ textDecoration: "none", color: "inherit" }}
+					to={"/articles/" + article.article_id}
+					key={article.article_id}
+				>
+					<ArticleCard article={article} />
+				</Link>
 			))}
 
 			{loadedArticles < totalArticles ? (
