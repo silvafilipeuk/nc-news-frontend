@@ -6,7 +6,7 @@ const ArticleBox = styled.div`
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	width: 300px;
-	padding: 5px;
+	padding: 10px;
 	margin: 10px;
 	grid-template-areas:
 		"img img img"
@@ -25,6 +25,7 @@ const Image = styled.img`
 	grid-area: img;
 	width: 300px;
 	border-radius: 5px;
+	padding-bottom: 1rem;
 
 	@media ${sizes.md} {
 		width: 700px;
@@ -34,13 +35,13 @@ const Image = styled.img`
 const Title = styled.div`
 	grid-area: title;
 	justify-self: start;
-	padding: 5px 0px 5px 0px;
+	padding: 5px 0px 5px 5px;
 `;
 
 const Topic = styled.div`
 	grid-area: topic;
 	justify-self: start;
-	padding: 5px 0px 5px 0px;
+	padding: 5px 0px 5px 5px;
 `;
 
 const CreationDate = styled.div`
@@ -52,24 +53,24 @@ const CreationDate = styled.div`
 const Author = styled.div`
 	grid-area: author;
 	justify-self: end;
-	padding: 5px 0px 5px 0px;
+	padding: 5px 5px 5px 0px;
 `;
 
 const Body = styled.div`
 	grid-area: body;
-	padding: 5px 0px 5px 0px;
+	padding: 5px 5px 15px 5px;
 `;
 
 const Votes = styled.div`
 	grid-area: votes;
 	justify-self: start;
-	padding: 5px 0px 5px 0px;
+	padding: 5px 0px 5px 5px;
 `;
 
 const CommentCount = styled.div`
 	grid-area: comment_count;
 	justify-self: end;
-	padding: 5px 0px 5px 0px;
+	padding: 5px 5px 5px 0px;
 `;
 
 function ArticleCard({ article }) {
