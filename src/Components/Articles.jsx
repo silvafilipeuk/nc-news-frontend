@@ -3,7 +3,6 @@ import ArticleCard from "./ReusableComponents/ArticleCard";
 import getArticles from "../utils/getArticles";
 import LoadMoreButton from "./ReusableComponents/LoadMoreButton";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 const Container = styled.div`
 	display: grid;
@@ -30,13 +29,7 @@ function Articles() {
 	return (
 		<Container>
 			{articles.map((article) => (
-				<Link
-					style={{ textDecoration: "none", color: "inherit" }}
-					to={"/articles/" + article.article_id}
-					key={article.article_id}
-				>
-					<ArticleCard article={article} />
-				</Link>
+				<ArticleCard key={article.article_id} article={article} />
 			))}
 
 			{loadedArticles < totalArticles ? (

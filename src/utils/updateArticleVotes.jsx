@@ -5,15 +5,18 @@ const instance = axios.create({
 	timeout: 10000,
 });
 
-export default function getComments(article_id) {
+export default function updateArticlesVotes(article_id, votes) {
 	const params = article_id;
+	const body = {
+		inc_votes: votes,
+	};
 
 	return instance
-		.get("/articles/" + params + "/comments")
+		.patch("/articles/" + params, body)
 		.then((response) => {
 			return response.data;
 		})
 		.catch((err) => {
-			return "Something went wrong when fetching the comments! " + err;
+			console.log(err);
 		});
 }
