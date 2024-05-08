@@ -18,12 +18,24 @@ const CommentsBox = styled.div`
 	font-family: "Roboto", sans-serif;
 	font-weight: 700;
 	font-style: normal;
+	color: teal;
+`;
+
+const NoCommentsBox = styled.div`
+	display: grid;
+	justify-self: start;
+	margin: 10px;
+	padding: 5px;
+	font-family: "Roboto", sans-serif;
+	font-weight: 400;
+	font-style: normal;
 `;
 
 function ArticlesById() {
 	const [article, setArticle] = useState([]);
 	const [comments, setComments] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
+
 	const { article_id } = useParams();
 
 	useEffect(() => {
@@ -34,14 +46,21 @@ function ArticlesById() {
 				setIsLoading(false);
 			}
 		);
-	}, []);
+	}, [article_id]);
 
 	return isLoading ? (
 		"Loading"
 	) : (
 		<Container>
 			<ArticleCard article={article} />
-			<CommentsBox>Comments:</CommentsBox>
+			{comments.length > 0 ? (
+				<CommentsBox>Comments:</CommentsBox>
+			) : (
+				<NoCommentsBox>
+					There are no comments yet. You could be the first to share
+					your thoughts!
+				</NoCommentsBox>
+			)}
 			{comments.map((comment) => {
 				return (
 					<CommentCard key={comment.comment_id} comment={comment} />

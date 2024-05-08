@@ -7,7 +7,7 @@ const CommentBox = styled.div`
 	grid-template-columns: 1fr 1fr;
 	width: 300px;
 	padding: 10px;
-	margin: 10px;
+	margin: 10px 0 0 0;
 	grid-template-areas:
 		"creation_date author"
 		"body body"
