@@ -4,8 +4,9 @@ import formatCourseDate from "../../utils/utils";
 import VoteUpButton from "./VoteUpButton";
 import VoteDownButton from "./VoteDownButton";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import updateArticlesVotes from "../../utils/updateArticleVotes";
+import { UserContext } from "../../contexts/Users";
 
 const ArticleBox = styled.div`
 	display: grid;
@@ -131,6 +132,7 @@ function ArticleCard({ article }) {
 	const [voteChange, setVoteChange] = useState(0);
 	const date = formatCourseDate(article.created_at.split("T")[0]);
 	const hour = article.created_at.split("T")[1].slice(0, 5);
+	const { loggedUser } = useContext(UserContext);
 
 	const handleArticleUpVote = () => {
 		setArticleVotes(articleVotes + 1);
@@ -176,15 +178,22 @@ function ArticleCard({ article }) {
 			<VoteArticleBox>
 				<Votes>
 					<strong>Votes:</strong> {articleVotes}
-					<VoteUpButton
-						voteChange={voteChange}
-						handleArticleUpVote={handleArticleUpVote}
-					/>
-					<VoteDownButton
-						voteChange={voteChange}
-						handleArticleDownVote={handleArticleDownVote}
-					/>
+					{loggedUser === "Sign in" ? (
+						""
+					) : (
+						<>
+							<VoteUpButton
+								voteChange={voteChange}
+								handleArticleUpVote={handleArticleUpVote}
+							/>
+							<VoteDownButton
+								voteChange={voteChange}
+								handleArticleDownVote={handleArticleDownVote}
+							/>
+						</>
+					)}
 				</Votes>
+
 				<CommentCount>
 					<strong>Comments:</strong> {article.comment_count}
 				</CommentCount>

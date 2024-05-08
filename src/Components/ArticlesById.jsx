@@ -5,6 +5,7 @@ import { getArticleById } from "../utils/getArticles";
 import { useEffect, useState } from "react";
 import getComments from "../utils/getComments";
 import CommentCard from "./ReusableComponents/CommentCard";
+import PostCommentCard from "./PostComment";
 
 const Container = styled.div`
 	display: grid;
@@ -46,7 +47,7 @@ function ArticlesById() {
 				setIsLoading(false);
 			}
 		);
-	}, [article_id]);
+	}, [article_id, comments]);
 
 	return isLoading ? (
 		"Loading"
@@ -54,12 +55,18 @@ function ArticlesById() {
 		<Container>
 			<ArticleCard article={article} />
 			{comments.length > 0 ? (
-				<CommentsBox>Comments:</CommentsBox>
+				<>
+					<CommentsBox>Comments:</CommentsBox>
+					<PostCommentCard article={article}></PostCommentCard>
+				</>
 			) : (
-				<NoCommentsBox>
-					There are no comments yet. You could be the first to share
-					your thoughts!
-				</NoCommentsBox>
+				<>
+					<NoCommentsBox>
+						There are no comments yet. You could be the first to
+						share your thoughts!
+					</NoCommentsBox>
+					<PostCommentCard></PostCommentCard>
+				</>
 			)}
 			{comments.map((comment) => {
 				return (
