@@ -3,12 +3,15 @@ import sizes from "../utils/breakPoints";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../contexts/UsersContext";
+import Topics from "./Topics";
 
 const HeaderContainer = styled.div`
 	display: grid;
 	align-items: center;
 	grid-template-columns: 1fr 1fr 1fr;
-	grid-template-areas: "logo searchbar users";
+	grid-template-areas:
+		"logo searchbar users"
+		"topics topics topics";
 	width: 90%;
 	font-size: 1em;
 	border: 0 none;
@@ -16,7 +19,7 @@ const HeaderContainer = styled.div`
 	box-shadow: none;
 	float: none;
 
-	padding: 1em;
+	padding: 1em 1em 0 1em;
 
 	@media ${sizes.sm} {
 		width: 550px;
@@ -85,6 +88,16 @@ const Users = styled(Link)`
 	text-decoration: none;
 `;
 
+const Topic = styled.div`
+	grid-area: topics;
+	justify-self: center;
+	font-size: 0.675em;
+	text-decoration: none;
+	font-family: "Roboto", sans-serif;
+	font-weight: 700;
+	font-style: normal;
+`;
+
 function Header() {
 	const { loggedUser } = useContext(UserContext);
 
@@ -109,6 +122,9 @@ function Header() {
 				</svg>
 				{loggedUser}
 			</Users>
+			<Topic>
+				<Topics></Topics>
+			</Topic>
 		</HeaderContainer>
 	);
 }
