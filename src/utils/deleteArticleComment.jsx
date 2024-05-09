@@ -12,6 +12,6 @@ export default function deleteArticleComment(comment_id) {
 			return response.data;
 		})
 		.catch((err) => {
-			console.log(err);
+			Promise.reject(err.response.data);
 		});
 }

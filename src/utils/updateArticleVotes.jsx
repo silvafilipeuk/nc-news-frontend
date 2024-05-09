@@ -17,6 +17,6 @@ export default function updateArticlesVotes(article_id, votes) {
 			return response.data;
 		})
 		.catch((err) => {
-			console.log(err);
+			return Promise.reject(err.response.data);
 		});
 }

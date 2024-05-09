@@ -12,6 +12,6 @@ export default function getTopics() {
 			return response.data;
 		})
 		.catch((err) => {
-			console.log(err);
+			return Promise.reject(err.response.data);
 		});
 }

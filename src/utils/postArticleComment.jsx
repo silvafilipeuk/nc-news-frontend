@@ -17,6 +17,6 @@ export default function postArticleComment(article_id, user, commentBody) {
 			return response.data;
 		})
 		.catch((err) => {
-			console.log(err);
+			return Promise.reject(err.response.data);
 		});
 }
