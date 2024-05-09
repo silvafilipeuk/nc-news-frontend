@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import badNews from "../images/bad_news.png";
+import sizes from "../utils/breakPoints";
 
 const Container = styled.div`
 	display: grid;
@@ -35,7 +36,11 @@ const ErrorDetail = styled.div`
 	font-family: "Roboto", sans-serif;
 	font-weight: 700;
 	font-style: normal;
-	font-size: 1.5em;
+	font-size: 1em;
+
+	@media ${sizes.md} {
+		font-size: 1.5em;
+	}
 `;
 
 export default function ErrorPage({
