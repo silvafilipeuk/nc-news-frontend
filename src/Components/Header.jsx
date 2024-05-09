@@ -103,7 +103,7 @@ function Header() {
 
 	return (
 		<HeaderContainer>
-			<Logo to={"/articles/"}>NCnews</Logo>
+			<Logo to={"/"}>NCnews</Logo>
 			<SearchBar type="text" placeholder="Search..."></SearchBar>
 			<Users to={"/login"}>
 				<svg
