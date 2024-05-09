@@ -6,6 +6,7 @@ import { Routes, Route } from "react-router-dom";
 import { UserProvider } from "./contexts/UsersContext";
 import Login from "./Components/Login";
 import { AlertMessagesProvider } from "./contexts/AlertMessagesContext";
+import Topics from "./Components/Topics";
 
 function App() {
 	return (
@@ -21,6 +22,7 @@ function App() {
 							element={<ArticlesById />}
 						/>
 						<Route path="/login" element={<Login />} />
+						<Route path="/topics" element={<Topics />} />
 					</Routes>
 				</MainContent>
 			</UserProvider>

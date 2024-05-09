@@ -5,8 +5,8 @@ const instance = axios.create({
 	timeout: 20000,
 });
 
-export default function getArticles(limit = 10, p = 1) {
-	const params = { limit: limit, p: p };
+export default function getArticles(limit = 10, p = 1, topic) {
+	const params = { limit: limit, p: p, topic: topic };
 
 	return instance
 		.get("/articles", { params })
