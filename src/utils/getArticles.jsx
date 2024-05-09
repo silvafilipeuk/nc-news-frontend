@@ -20,7 +20,7 @@ export default function getArticles(limit = 10, p = 1, topic, order, sort_by) {
 			return response.data;
 		})
 		.catch((err) => {
-			console.log(err);
+			return Promise.reject(err.response.data);
 		});
 }
 
@@ -33,6 +33,6 @@ export function getArticleById(article_id) {
 			return response.data;
 		})
 		.catch((err) => {
-			console.log(err);
+			return Promise.reject(err.response.data);
 		});
 }

@@ -5,6 +5,7 @@ import { UserContext } from "../contexts/UsersContext";
 import postArticleComment from "../utils/postArticleComment";
 import { AlertMessagesContext } from "../contexts/AlertMessagesContext";
 import AlertMsg from "./ReusableComponents/AlertMsg";
+import ErrorPage from "./ErrorPage";
 
 const CommentBox = styled.div`
 	display: grid;
@@ -75,6 +76,8 @@ function PostCommentCard({ article }) {
 		setAlertMessage,
 		alertMessageStatus,
 		setAlertMessageStatus,
+		error,
+		setError,
 	} = useContext(AlertMessagesContext);
 	const [commentBody, setCommentBody] = useState("");
 
@@ -102,15 +105,18 @@ function PostCommentCard({ article }) {
 					setTimeout(() => setShowAlertMessage(false), 3000);
 					setCommentBody("");
 				})
-				.catch(() => {
+				.catch((err) => {
 					setAlertMessageStatus("error");
 					setAlertMessage("Something went wrong! Please try again!");
 					setShowAlertMessage(true);
 					setTimeout(() => setShowAlertMessage(false), 3000);
 					setCommentBody("");
+					setError(err);
 				});
 		}
 	};
+
+	if (error) return <ErrorPage errorCode={error.status} msg={error.msg} />;
 
 	return loggedUser === "Sign in" ? (
 		<CommentBox style={{ color: "#c4170c" }}>

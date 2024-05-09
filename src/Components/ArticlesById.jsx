@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import getComments from "../utils/getComments";
 import CommentCard from "./ReusableComponents/CommentCard";
 import PostCommentCard from "./PostComment";
+import ErrorPage from "./ErrorPage";
 
 const Container = styled.div`
 	display: grid;
@@ -32,7 +33,7 @@ const NoCommentsBox = styled.div`
 	font-style: normal;
 `;
 
-function ArticlesById() {
+function ArticlesById({ error, setError }) {
 	const [article, setArticle] = useState([]);
 	const [comments, setComments] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
@@ -40,14 +41,18 @@ function ArticlesById() {
 	const { article_id } = useParams();
 
 	useEffect(() => {
-		Promise.all([getArticleById(article_id), getComments(article_id)]).then(
-			(response) => {
+		Promise.all([getArticleById(article_id), getComments(article_id)])
+			.then((response) => {
 				setArticle(response[0].article);
 				setComments(response[1].comments);
 				setIsLoading(false);
-			}
-		);
-	}, [article_id, comments]);
+			})
+			.catch((err) => {
+				setError(err);
+			});
+	}, [article_id, comments, setError]);
+
+	if (error) return <ErrorPage errorCode={error.status} msg={error.msg} />;
 
 	return isLoading ? (
 		"Loading"

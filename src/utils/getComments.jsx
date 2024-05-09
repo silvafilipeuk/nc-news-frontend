@@ -14,6 +14,6 @@ export default function getComments(article_id) {
 			return response.data;
 		})
 		.catch((err) => {
-			return "Something went wrong when fetching the comments! " + err;
+			return Promise.reject(err.response.data);
 		});
 }

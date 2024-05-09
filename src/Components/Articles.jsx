@@ -5,6 +5,7 @@ import LoadMoreButton from "./ReusableComponents/LoadMoreButton";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import sizes from "../utils/breakPoints";
+import ErrorPage from "./ErrorPage";
 
 const Container = styled.div`
 	display: grid;
@@ -75,7 +76,7 @@ const OrderSelect = styled.select`
 	}
 `;
 
-function Articles() {
+function Articles({ error, setError }) {
 	const [articles, setArticles] = useState([]);
 	const [limit, setLimit] = useState(10);
 	const [totalArticles, setTotalArticles] = useState(0);
@@ -105,14 +106,18 @@ function Articles() {
 	};
 
 	useEffect(() => {
-		getArticles(limit, 1, topicQuery, orderQuery, SortByQuery).then(
-			(response) => {
+		getArticles(limit, 1, topicQuery, orderQuery, SortByQuery)
+			.then((response) => {
 				setArticles(response.articles);
 				setTotalArticles(response.total_count);
 				setloadedArticles(response.articles.length);
-			}
-		);
-	}, [limit, topicQuery, orderQuery, SortByQuery]);
+			})
+			.catch((err) => {
+				setError(err);
+			});
+	}, [limit, topicQuery, orderQuery, SortByQuery, setError]);
+
+	if (error) return <ErrorPage errorCode={error.status} msg={error.msg} />;
 
 	return (
 		<Container>
@@ -148,7 +153,12 @@ function Articles() {
 			</SortBy>
 			<ArticlesList>
 				{articles.map((article) => (
-					<ArticleCard key={article.article_id} article={article} />
+					<ArticleCard
+						key={article.article_id}
+						error={error}
+						setError={setError}
+						article={article}
+					/>
 				))}
 
 				{loadedArticles < totalArticles ? (
