@@ -2,7 +2,7 @@ import axios from "axios";
 
 const instance = axios.create({
 	baseURL: "https://nc-news-vvzg.onrender.com/api",
-	timeout: 10000,
+	timeout: 20000,
 });
 
 export default function getArticles(limit = 10, p = 1) {

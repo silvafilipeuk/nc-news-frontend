@@ -6,7 +6,7 @@ import VoteDownButton from "./VoteDownButton";
 import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import updateArticlesVotes from "../../utils/updateArticleVotes";
-import { UserContext } from "../../contexts/Users";
+import { UserContext } from "../../contexts/UsersContext";
 
 const ArticleBox = styled.div`
 	display: grid;

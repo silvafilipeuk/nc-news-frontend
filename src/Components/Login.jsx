@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import sizes from "../utils/breakPoints";
 import { useContext, useState } from "react";
-import { UserContext } from "../contexts/Users";
+import { UserContext } from "../contexts/UsersContext";
 import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`

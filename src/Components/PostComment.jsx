@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import sizes from "../utils/breakPoints";
 import { useContext, useState } from "react";
-import { UserContext } from "../contexts/Users";
+import { UserContext } from "../contexts/UsersContext";
 import postArticleComment from "../utils/postArticleComment";
-import AlertMessage from "./ReusableComponents/AlertMessage";
+import { AlertMessagesContext } from "../contexts/AlertMessagesContext";
+import AlertMsg from "./ReusableComponents/AlertMsg";
 
 const CommentBox = styled.div`
 	display: grid;
@@ -67,10 +68,15 @@ const AddButton = styled.button`
 
 function PostCommentCard({ article }) {
 	const { loggedUser } = useContext(UserContext);
+	const {
+		showAlertMessage,
+		setShowAlertMessage,
+		alertMessage,
+		setAlertMessage,
+		alertMessageStatus,
+		setAlertMessageStatus,
+	} = useContext(AlertMessagesContext);
 	const [commentBody, setCommentBody] = useState("");
-	const [showAlertMessage, setShowAlertMessage] = useState(false);
-	const [alertMessage, setAlertMessage] = useState("");
-	const [alertMessageStatus, setAlertMessageStatus] = useState("");
 
 	const placeholder = "Comment as " + loggedUser;
 
@@ -111,7 +117,7 @@ function PostCommentCard({ article }) {
 			Sign in to add a comment!
 		</CommentBox>
 	) : showAlertMessage ? (
-		<AlertMessage type={alertMessageStatus} msg={alertMessage} />
+		<AlertMsg type={alertMessageStatus} msg={alertMessage} />
 	) : (
 		<CommentBoxForm onSubmit={handleSubmit}>
 			<NewComment
