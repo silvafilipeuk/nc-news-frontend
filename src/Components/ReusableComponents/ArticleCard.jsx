@@ -20,6 +20,8 @@ const ArticleBox = styled.div`
 		"title title title"
 		"body body body"
 		"votes votes comment_count";
+	background-color: whitesmoke;
+	color: #31302d;
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 	z-index: 0;
 
@@ -40,7 +42,8 @@ const VoteArticleBox = styled.div`
 		"title title title"
 		"body body body"
 		"votes votes comment_count";
-	background-color: whitesmoke;
+	background-color: #dad8d5;
+	color: #31302d;
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
 	@media ${sizes.md} {
@@ -130,9 +133,10 @@ const CommentCount = styled.div`
 function ArticleCard({ article }) {
 	const [articleVotes, setArticleVotes] = useState(article.votes);
 	const [voteChange, setVoteChange] = useState(0);
-	const date = formatCourseDate(article.created_at.split("T")[0]);
-	const hour = article.created_at.split("T")[1].slice(0, 5);
 	const { loggedUser } = useContext(UserContext);
+
+	const date = formatCourseDate(article.created_at.split("T")[0]);
+	let hour = article.created_at.split("T")[1].slice(0, 5);
 
 	const handleArticleUpVote = () => {
 		setArticleVotes(articleVotes + 1);

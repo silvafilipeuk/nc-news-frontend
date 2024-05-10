@@ -19,7 +19,12 @@ function App() {
 				<MainContent>
 					<Header />
 					<Routes>
-						<Route path="/" element={<Articles />} />
+						<Route
+							path="/"
+							element={
+								<Articles error={error} setError={setError} />
+							}
+						/>
 						<Route
 							path="/articles"
 							element={

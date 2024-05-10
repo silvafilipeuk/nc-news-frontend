@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import sizes from "../utils/breakPoints";
 import ErrorPage from "./ErrorPage";
+import Loading from "./ReusableComponents/Loading";
 
 const Container = styled.div`
 	display: grid;
@@ -82,6 +83,7 @@ function Articles({ error, setError }) {
 	const [totalArticles, setTotalArticles] = useState(0);
 	const [loadedArticles, setloadedArticles] = useState(0);
 	const [searchParams, setSearchParams] = useSearchParams();
+	const [isLoading, setIsLoading] = useState(true);
 
 	const topicQuery = searchParams.get("topic");
 	const orderQuery = searchParams.get("order") || "asc";
@@ -106,20 +108,25 @@ function Articles({ error, setError }) {
 	};
 
 	useEffect(() => {
+		setIsLoading(true);
 		getArticles(limit, 1, topicQuery, orderQuery, SortByQuery)
 			.then((response) => {
 				setArticles(response.articles);
 				setTotalArticles(response.total_count);
 				setloadedArticles(response.articles.length);
+				setIsLoading(false);
 			})
 			.catch((err) => {
 				setError(err);
+				setIsLoading(false);
 			});
 	}, [limit, topicQuery, orderQuery, SortByQuery, setError]);
 
 	if (error) return <ErrorPage errorCode={error.status} msg={error.msg} />;
 
-	return (
+	return isLoading ? (
+		<Loading />
+	) : (
 		<Container>
 			<SortBy>
 				<SortBySelect onChange={(e) => setSortBy(e.target.value)}>
@@ -153,12 +160,7 @@ function Articles({ error, setError }) {
 			</SortBy>
 			<ArticlesList>
 				{articles.map((article) => (
-					<ArticleCard
-						key={article.article_id}
-						error={error}
-						setError={setError}
-						article={article}
-					/>
+					<ArticleCard key={article.article_id} article={article} />
 				))}
 
 				{loadedArticles < totalArticles ? (
