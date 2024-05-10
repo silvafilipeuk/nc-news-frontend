@@ -7,10 +7,13 @@ import { useContext, useState } from "react";
 import { AlertMessagesContext } from "../../contexts/AlertMessagesContext";
 import AlertMsg from "./AlertMsg";
 import deleteArticleComment from "../../utils/deleteArticleComment";
+import VoteUpButton from "./VoteUpButton";
+import VoteDownButton from "./VoteDownButton";
+import updateCommentVotes from "../../utils/updateCommentVotes";
 
 const CommentBox = styled.div`
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: 1.1fr 0.9fr;
 	width: 300px;
 	padding: 10px;
 	margin: 10px 0 0 0;
@@ -22,6 +25,7 @@ const CommentBox = styled.div`
 
 	@media ${sizes.md} {
 		width: 700px;
+		grid-template-columns: 1fr 1fr;
 	}
 `;
 
@@ -44,8 +48,12 @@ const Body = styled.div`
 
 const Votes = styled.div`
 	grid-area: votes;
-	justify-self: start;
-	padding: 5px 0 5px 5px;
+	padding: 2px 0 15px 10px;
+	font-size: 0.625em;
+
+	@media ${sizes.md} {
+		font-size: 0.875em;
+	}
 `;
 
 const Delete = styled.button`
@@ -59,6 +67,8 @@ const Delete = styled.button`
 
 function CommentCard({ comment }) {
 	const { loggedUser } = useContext(UserContext);
+	const [commentVotes, setCommentVotes] = useState(comment.votes);
+	const [commentVoteChange, setCommentVoteChange] = useState(0);
 
 	const [deletedId, setDeletedId] = useState("");
 
@@ -73,6 +83,18 @@ function CommentCard({ comment }) {
 
 	const date = formatCourseDate(comment.created_at.split("T")[0]);
 	const hour = comment.created_at.split("T")[1].slice(0, 5);
+
+	const handleCommentUpVote = () => {
+		setCommentVotes(commentVotes + 1);
+		setCommentVoteChange((currentVoteChange) => currentVoteChange + 1);
+		updateCommentVotes(comment.comment_id, 1);
+	};
+
+	const handleCommentDownVote = () => {
+		setCommentVotes(commentVotes - 1);
+		setCommentVoteChange((currentVoteChange) => currentVoteChange + -1);
+		updateCommentVotes(comment.comment_id, -1);
+	};
 
 	const handleCommentDelete = () => {
 		setDeletedId(comment.comment_id);
@@ -118,8 +140,21 @@ function CommentCard({ comment }) {
 				<Body>{comment.body}</Body>
 			)}
 			<Votes>
-				<strong style={{ color: "teal" }}>Votes:</strong>{" "}
-				{comment.votes}
+				<strong style={{ color: "teal" }}>Votes:</strong> {commentVotes}
+				{loggedUser === "Sign in" ? (
+					""
+				) : (
+					<>
+						<VoteUpButton
+							voteChange={commentVoteChange}
+							handleArticleUpVote={handleCommentUpVote}
+						/>
+						<VoteDownButton
+							voteChange={commentVoteChange}
+							handleArticleDownVote={handleCommentDownVote}
+						/>
+					</>
+				)}
 			</Votes>
 			<Delete>
 				{loggedUser === comment.author ? (
