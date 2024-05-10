@@ -6,6 +6,7 @@ import postArticleComment from "../utils/postArticleComment";
 import { AlertMessagesContext } from "../contexts/AlertMessagesContext";
 import AlertMsg from "./ReusableComponents/AlertMsg";
 import ErrorPage from "./ErrorPage";
+import getComments from "../utils/getComments";
 
 const CommentBox = styled.div`
 	display: grid;
@@ -78,7 +79,7 @@ const AddButton = styled.button`
 	justify-self: end;
 `;
 
-function PostCommentCard({ article }) {
+function PostCommentCard({ article, setComments }) {
 	const { loggedUser } = useContext(UserContext);
 	const {
 		showAlertMessage,
@@ -115,6 +116,9 @@ function PostCommentCard({ article }) {
 					setShowAlertMessage(true);
 					setTimeout(() => setShowAlertMessage(false), 3000);
 					setCommentBody("");
+					getComments(article.article_id).then((response) => {
+						setComments(response.comments);
+					});
 				})
 				.catch((err) => {
 					setAlertMessageStatus("error");

@@ -52,7 +52,7 @@ function ArticlesById({ error, setError }) {
 				setError(err);
 				setIsLoading(false);
 			});
-	}, [article_id, setError, setIsLoading]);
+	}, [article_id, setComments, setError, setIsLoading]);
 
 	if (error) return <ErrorPage errorCode={error.status} msg={error.msg} />;
 
@@ -60,11 +60,14 @@ function ArticlesById({ error, setError }) {
 		<Loading />
 	) : (
 		<Container>
-			{article && <ArticleCard article={article} />}
+			<ArticleCard article={article} />
 			{comments.length > 0 ? (
 				<>
 					<CommentsBox>Comments:</CommentsBox>
-					<PostCommentCard article={article}></PostCommentCard>
+					<PostCommentCard
+						setComments={setComments}
+						article={article}
+					></PostCommentCard>
 				</>
 			) : (
 				<>
@@ -78,7 +81,8 @@ function ArticlesById({ error, setError }) {
 			{comments.map((comment) => {
 				return (
 					<CommentCard
-						isLoading={isLoading}
+						article_id={article.article_id}
+						setComments={setComments}
 						key={comment.comment_id}
 						comment={comment}
 					/>

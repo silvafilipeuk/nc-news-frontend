@@ -10,7 +10,7 @@ import deleteArticleComment from "../../utils/deleteArticleComment";
 import VoteUpButton from "./VoteUpButton";
 import VoteDownButton from "./VoteDownButton";
 import updateCommentVotes from "../../utils/updateCommentVotes";
-import Loading from "./Loading";
+import getComments from "../../utils/getComments";
 
 const CommentBox = styled.div`
 	display: grid;
@@ -67,7 +67,7 @@ const Delete = styled.button`
 	border: none;
 `;
 
-function CommentCard({ comment, isLoading }) {
+function CommentCard({ comment, setComments, article_id }) {
 	const { loggedUser } = useContext(UserContext);
 	const [commentVotes, setCommentVotes] = useState(comment.votes);
 	const [commentVoteChange, setCommentVoteChange] = useState(0);
@@ -112,6 +112,9 @@ function CommentCard({ comment, isLoading }) {
 				setShowAlertMessage(true);
 				setTimeout(() => setShowAlertMessage(false), 3000);
 				setDeletedId("");
+				getComments(article_id).then((response) => {
+					setComments(response.comments);
+				});
 			})
 			.catch(() => {
 				setDeletedId("");
@@ -122,9 +125,7 @@ function CommentCard({ comment, isLoading }) {
 			});
 	};
 
-	return isLoading ? (
-		<Loading />
-	) : (
+	return (
 		<CommentBox>
 			<CreationDate>
 				<strong style={{ color: "teal" }}>Date:</strong>{" "}
