@@ -12,11 +12,13 @@ const CommentBox = styled.div`
 	grid-template-columns: 1fr;
 	width: 300px;
 	padding: 10px;
-	margin: 10px 0 0 0;
+	margin: 10px 0 10px 0;
 	grid-template-areas:
 		"newcomment"
 		"addButton";
-	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 1px 4px;
+	background-color: whitesmoke;
+	color: #31302d;
 
 	@media ${sizes.md} {
 		width: 700px;
@@ -33,6 +35,8 @@ const CommentBoxForm = styled.form`
 		"newcomment"
 		"addButton";
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+	background-color: whitesmoke;
+	color: #31302d;
 
 	@media ${sizes.md} {
 		width: 700px;
@@ -47,8 +51,15 @@ const NewComment = styled.textarea`
 	height: 100px;
 	resize: none;
 	border: 1px solid lightgrey;
-
+	background-color: white;
+	color: #31302d;
 	width: 100%;
+
+	&:focus {
+		outline: none;
+		box-shadow: 0px 0px 2px green;
+	}
+
 	@media ${sizes.md} {
 		width: 700px;
 	}

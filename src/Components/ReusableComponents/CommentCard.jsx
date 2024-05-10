@@ -10,19 +10,21 @@ import deleteArticleComment from "../../utils/deleteArticleComment";
 import VoteUpButton from "./VoteUpButton";
 import VoteDownButton from "./VoteDownButton";
 import updateCommentVotes from "../../utils/updateCommentVotes";
+import Loading from "./Loading";
 
 const CommentBox = styled.div`
 	display: grid;
 	grid-template-columns: 1.1fr 0.9fr;
 	width: 300px;
 	padding: 10px;
-	margin: 10px 0 0 0;
+	margin: 10px 0 10px 0;
 	grid-template-areas:
 		"creation_date author"
 		"body body"
 		"votes delete";
-	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 1px 4px;
+	background-color: whitesmoke;
+	color: #31302d;
 	@media ${sizes.md} {
 		width: 700px;
 		grid-template-columns: 1fr 1fr;
@@ -65,7 +67,7 @@ const Delete = styled.button`
 	border: none;
 `;
 
-function CommentCard({ comment }) {
+function CommentCard({ comment, isLoading }) {
 	const { loggedUser } = useContext(UserContext);
 	const [commentVotes, setCommentVotes] = useState(comment.votes);
 	const [commentVoteChange, setCommentVoteChange] = useState(0);
@@ -120,7 +122,9 @@ function CommentCard({ comment }) {
 			});
 	};
 
-	return (
+	return isLoading ? (
+		<Loading />
+	) : (
 		<CommentBox>
 			<CreationDate>
 				<strong style={{ color: "teal" }}>Date:</strong>{" "}

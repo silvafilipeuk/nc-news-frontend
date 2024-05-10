@@ -5,6 +5,7 @@ import { getArticleById } from "../utils/getArticles";
 import { useEffect, useState } from "react";
 import getComments from "../utils/getComments";
 import CommentCard from "./ReusableComponents/CommentCard";
+import Loading from "./ReusableComponents/Loading";
 import PostCommentCard from "./PostComment";
 import ErrorPage from "./ErrorPage";
 
@@ -36,11 +37,11 @@ const NoCommentsBox = styled.div`
 function ArticlesById({ error, setError }) {
 	const [article, setArticle] = useState([]);
 	const [comments, setComments] = useState([]);
+	const { article_id } = useParams();
 	const [isLoading, setIsLoading] = useState(true);
 
-	const { article_id } = useParams();
-
 	useEffect(() => {
+		setIsLoading(true);
 		Promise.all([getArticleById(article_id), getComments(article_id)])
 			.then((response) => {
 				setArticle(response[0].article);
@@ -49,16 +50,17 @@ function ArticlesById({ error, setError }) {
 			})
 			.catch((err) => {
 				setError(err);
+				setIsLoading(false);
 			});
-	}, [article_id, comments, setError]);
+	}, [article_id, setError, setIsLoading]);
 
 	if (error) return <ErrorPage errorCode={error.status} msg={error.msg} />;
 
 	return isLoading ? (
-		"Loading"
+		<Loading />
 	) : (
 		<Container>
-			<ArticleCard article={article} />
+			{article && <ArticleCard article={article} />}
 			{comments.length > 0 ? (
 				<>
 					<CommentsBox>Comments:</CommentsBox>
@@ -75,7 +77,11 @@ function ArticlesById({ error, setError }) {
 			)}
 			{comments.map((comment) => {
 				return (
-					<CommentCard key={comment.comment_id} comment={comment} />
+					<CommentCard
+						isLoading={isLoading}
+						key={comment.comment_id}
+						comment={comment}
+					/>
 				);
 			})}
 		</Container>

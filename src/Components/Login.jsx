@@ -18,7 +18,7 @@ const LoginBox = styled.form`
 		"userselect"
 		"loginButton";
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-
+	background-color: whitesmoke;
 	@media ${sizes.md} {
 		width: 700px;
 	}
