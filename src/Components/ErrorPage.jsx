@@ -25,8 +25,14 @@ const ErrorTitle = styled.div`
 `;
 
 const ErrorImage = styled.div`
+	display: grid;
 	grid-area: image;
 	justify-self: center;
+
+	img {
+		justify-self: center;
+		width: 70%;
+	}
 `;
 
 const ErrorDetail = styled.div`
@@ -36,7 +42,7 @@ const ErrorDetail = styled.div`
 	font-family: "Roboto", sans-serif;
 	font-weight: 700;
 	font-style: normal;
-	font-size: 1em;
+	font-size: 0.875em;
 
 	@media ${sizes.md} {
 		font-size: 1.5em;
