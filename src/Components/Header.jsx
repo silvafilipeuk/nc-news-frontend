@@ -98,13 +98,20 @@ const Topic = styled.div`
 	font-style: normal;
 `;
 
-function Header() {
+function Header({ setSearch }) {
 	const { loggedUser } = useContext(UserContext);
+
+	const handleSearch = (e) => {
+		e.preventDefault();
+		setSearch(e.target[0].value);
+	};
 
 	return (
 		<HeaderContainer>
 			<Logo to={"/"}>NCnews</Logo>
-			<SearchBar type="text" placeholder="Search..."></SearchBar>
+			<form onSubmit={handleSearch}>
+				<SearchBar type="text" placeholder="Search..."></SearchBar>
+			</form>
 			<Users to={"/login"}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
