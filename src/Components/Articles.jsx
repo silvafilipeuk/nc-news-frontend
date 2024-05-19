@@ -77,7 +77,7 @@ const OrderSelect = styled.select`
 	}
 `;
 
-function Articles({ error, setError }) {
+function Articles({ search, error, setError }) {
 	const [articles, setArticles] = useState([]);
 	const [limit, setLimit] = useState(10);
 	const [totalArticles, setTotalArticles] = useState(0);
@@ -88,6 +88,18 @@ function Articles({ error, setError }) {
 	const topicQuery = searchParams.get("topic");
 	const orderQuery = searchParams.get("order") || "asc";
 	const SortByQuery = searchParams.get("sort_by") || "created_at";
+
+	const searchedArticles = () => {
+		let searchList = [...articles];
+
+		if (search.length) {
+			searchList = articles.filter((article) =>
+				article.title.toLowerCase().includes(search.toLowerCase())
+			);
+		}
+
+		return searchList;
+	};
 
 	function handleLoadMore() {
 		setLimit(limit + 10);
@@ -109,6 +121,7 @@ function Articles({ error, setError }) {
 
 	useEffect(() => {
 		setIsLoading(true);
+
 		getArticles(limit, 1, topicQuery, orderQuery, SortByQuery)
 			.then((response) => {
 				setArticles(response.articles);
@@ -159,7 +172,7 @@ function Articles({ error, setError }) {
 				</OrderSelect>
 			</SortBy>
 			<ArticlesList>
-				{articles.map((article) => (
+				{searchedArticles().map((article) => (
 					<ArticleCard key={article.article_id} article={article} />
 				))}
 

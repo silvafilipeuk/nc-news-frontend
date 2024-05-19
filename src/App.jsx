@@ -12,29 +12,39 @@ import { useState } from "react";
 
 function App() {
 	const [error, setError] = useState(null);
+	const [search, setSearch] = useState("");
 
 	return (
 		<AlertMessagesProvider>
 			<UserProvider>
 				<MainContent>
-					<Header />
+					<Header setSearch={setSearch} />
 					<Routes>
 						<Route
 							path="/"
 							element={
-								<Articles error={error} setError={setError} />
+								<Articles
+									search={search}
+									error={error}
+									setError={setError}
+								/>
 							}
 						/>
 						<Route
 							path="/articles"
 							element={
-								<Articles error={error} setError={setError} />
+								<Articles
+									search={search}
+									error={error}
+									setError={setError}
+								/>
 							}
 						/>
 						<Route
 							path="/articles/:article_id"
 							element={
 								<ArticlesById
+									search={search}
 									error={error}
 									setError={setError}
 								/>
